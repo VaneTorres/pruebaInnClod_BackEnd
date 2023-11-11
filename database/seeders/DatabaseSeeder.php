@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-
+use Database\Seeders\TipTipoDocSeeder;
+use Database\Seeders\ProProcesoSeeder;
+use Database\Seeders\UsuarioSeeder;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -13,6 +15,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // User::factory(10)->create();
+        $this->call(TipTipoDocSeeder::class);
+        $this->call(ProProcesoSeeder::class);
+        $this->call(UsuarioSeeder::class);
     }
 }
