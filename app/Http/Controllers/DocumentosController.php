@@ -39,4 +39,5 @@ class DocumentosController extends Controller
             return response()->json(['error'=>'No encontrado'],404);
         }
     }
+    
 }

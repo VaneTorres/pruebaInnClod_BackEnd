@@ -12,40 +12,38 @@ class DocumentosTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        // Crear un usuario y autenticarlo
-        $this->user = User::factory()->create();
+ 
+        $this->user = User::find(1);
         $this->actingAs($this->user);
     }
 
     public function testConsultarDocumentos()
     {
-        $response = $this->getJson('/api/documentos');
+        $response = $this->getJson('/api/documentos',['Authorization' => 'Bearer '.$this->user->createToken('authToken')->accessToken]);
         $response->assertStatus(200);
     }
     public function testCrearDocumento()
     {
-        $response = $this->postJson('/api/documentos', ['doc_nombre' => 'Documento de prueba', 'tip_id' => '1','pro_id' => '1','doc_contenido' => 'Contenido de prueba']);
+        $response = $this->postJson('/api/documentos', ['doc_nombre' => 'Documento de prueba', 'tip_id' => '1','pro_id' => '1','doc_contenido' => 'Contenido de prueba'],['Authorization' => 'Bearer '.$this->user->createToken('authToken')->accessToken]);
         $response->assertStatus(200);
     }
     public function testConsultarDocumento()
       {
-          $response = $this->getJson('/api/documentos/1');
+          $response = $this->getJson('/api/documentos/1',['Authorization' => 'Bearer '.$this->user->createToken('authToken')->accessToken]);
           $response->assertStatus(200);
       } 
       public function testActualizarDocumento()
     {
-        $response = $this->putJson('/api/documentos/1', ['doc_nombre' => 'Documento de prueba', 'tip_id' => '1','pro_id' => '1','doc_contenido' => 'Contenido de prueba']);
+        $response = $this->putJson('/api/documentos/1', ['doc_nombre' => 'Documento de prueba', 'tip_id' => '1','pro_id' => '1','doc_contenido' => 'Contenido de prueba'],['Authorization' => 'Bearer '.$this->user->createToken('authToken')->accessToken]);
         $response->assertStatus(200);
     }
     public function testEliminarDocumento()
     {
-        $response = $this->deleteJson('/api/documentos/1');
+        $response = $this->deleteJson('/api/documentos/1',[],['Authorization' => 'Bearer '.$this->user->createToken('authToken')->accessToken]);
         $response->assertStatus(200);
     }   
     protected function tearDown(): void
     {
-        $this->user->delete();
         parent::tearDown();
     }
 }
